@@ -39,13 +39,15 @@
 #define dv_sconcat_b_on_a(va, vb) \
 	(dv_copy_to((va), (va).size-1, (vb).items, (vb).size))
 
+#define DVEC_RESIZE_FACTOR 2
+
 #define dv_push(v, val) \
-	((_dv_resize((v), (v).size+1)) \
+	((_dv_resize((v), ((v).size > 0 ? (v).size*DVEC_RESIZE_FACTOR : DVEC_RESIZE_FACTOR))) \
 		? (((v).items[(v).size++] = (val)), &(v).items[(v).size-1]) \
 		: NULL)
 
 #define dv_pop(v) \
-	((_dv_resize((v), (v).size+1)) \
+	((_dv_resize((v), (v).size-1)) \
 		? ((v).items[--(v).size]) \
 		: ((typeof(*(v).items)){}))
 #define dv_peek(v) \
