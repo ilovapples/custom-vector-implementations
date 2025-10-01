@@ -41,8 +41,8 @@
 
 #define dv_push(v, val) \
 	((_dv_resize((v), (v).size+1)) \
-		? (((v).items[(v).size++] = (val)), 1) \
-		: 0)
+		? (((v).items[(v).size++] = (val)), &(v).items[(v).size-1]) \
+		: NULL)
 
 #define dv_pop(v) \
 	((_dv_resize((v), (v).size+1)) \
